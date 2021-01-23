@@ -1,42 +1,55 @@
-.header{
-    height: 5.0 rem;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
-    .wrap{
-        position: relative;
-        height: 100%;
-        max-width: 1450px;
-        margin: 0 auto;
-        .logo{
-            width: 13rem;
-            position: absolute;
-            top: 30px;
-            left: 50px;
-            -webkit-transform: translateY(-50%);
-            -moz-transform: translateY(-50%);
-            transform: translateY(-50%);
-            img{
-                display: block;
-                width: 30%;
-                margin: 0;
-            }
+.header {
+    height: 6.5rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    .wrap {
+      position: relative;
+      height: 100%;
+      max-width: 1450px;
+      margin: 0 auto;
+  
+      .logo {
+        width: 13rem;
+        position: absolute;
+        top: 50%;
+        left: 30px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        transform: translateY(-50%);
+  
+        img {
+          display: block;
+          width: 50%;
+          margin: 0;
         }
-        .callToAction{
-            position: absolute;
-            top: 50%; right: 10px;
-            -webkit-transform: translateY(-50%);
-            -moz-transform: translateY(-50%);
-            transform: translateY(-50%);
-
-            ul, li{
-                margin: 0;
-                padding: 0;
-            }
-
-            li{
-                list-style-type: none;
-                display: inline-block;
-                margin-right: 1.5rem;
-            }
+      }
+  
+      .callToActions {
+        position: absolute;
+        top: 50%; right: 10px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        transform: translateY(-50%);
+  
+        ul, li {
+          margin: 0;
+          padding: 0;
         }
+  
+        li {
+          list-style-type: none;
+          display: inline-block;
+          margin-right: 1.5rem;
+        }
+  
+        a{
+          font-size: 1.8rem;
+          line-height: 1;
+          color: black;
+          text-decoration: none;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+  
     }
-}
+  }
+  }

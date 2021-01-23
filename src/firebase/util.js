@@ -14,3 +14,26 @@ export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 // popUp
 GoogleProvider.setCustomParameters({ prompt: "select_account" });
 export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
+
+export const handleUserProfile = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+  const { uid } = userAuth;
+  // const firestore
+  const userRef = firestore.doc("users/${uid}");
+  const snapshot = await userRef.get();
+
+  // cek datauser
+  if (!snapshot.exists) {
+    const { displayName, email } = userAuth;
+    const timestamp = new Date();
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdDate: timestamp,
+        ...additionalData,
+      });
+    } catch (err) {}
+  }
+  return userRef;
+};
