@@ -10,6 +10,7 @@ import HomepageLayout from "./layouts/HomepageLayout";
 import "./default.scss";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
+import Recovery from "./pages/Recovery";
 
 // bbrp dta user auth
 const initialState = {
@@ -89,6 +90,14 @@ class App extends Component {
                 </MainLayout>
               )
             }
+          />
+          <Route
+            path="/recovery"
+            render={() => (
+              <MainLayout>
+                <Recovery />
+              </MainLayout>
+            )}
           />
         </Switch>
       </div>
