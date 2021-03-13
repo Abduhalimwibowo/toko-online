@@ -1,8 +1,11 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { auth, handleUserProfile } from "../../firebase/util";
 import Button from "../forms/Button";
 import FormInput from "../forms/FormInput";
+import { withRouter } from "react-router-dom";
+
 import "./styles.scss";
+import AuthWrapper from "../AuthWrapper";
 
 const initialState = {
   displayName: "",
@@ -12,35 +15,29 @@ const initialState = {
   errors: [],
 };
 
-class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...initialState,
-    };
+const Signup = (props) => {
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
+  const [errors, setErrors] = useState("");
 
-    this.handleChange = this.handleChange.bind(this);
-  }
+  const reset = () => {
+    setDisplayName("");
+    setEmail("");
+    setPassword("");
+    setconfirmPassword("");
+    setErrors([]);
+  };
 
-  handleChange(e) {
-    const { name, value } = e.target;
-
-    this.setState({
-      [name]: value,
-    });
-  }
-
-  handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event) => {
     // ga reload halaman pake prevdef
     event.preventDefault();
-    const { displayName, email, password, confirmPassword } = this.state;
 
     // logika cek pass dan confpass
     if (password !== confirmPassword) {
       const err = ["Password don't match"];
-      this.setState({
-        errors: err,
-      });
+      setErrors(err);
       return;
     }
     // buat akun
@@ -50,26 +47,20 @@ class Signup extends Component {
         password
       );
       await handleUserProfile(user, { displayName });
-      this.setState({
-        ...initialState,
-      });
+      reset();
+      props.history.push("/");
     } catch (err) {
       console.log(err);
     }
   };
 
-  render() {
-    const {
-      displayName,
-      email,
-      password,
-      confirmPassword,
-      errors,
-    } = this.state;
-    return (
+  const configAuthWrapper = {
+    headline: "Register",
+  };
+  return (
+    <AuthWrapper {...configAuthWrapper}>
       <div className="signup">
         <div className="wrap">
-          <h2>Sign Up</h2>
           {errors.length > 0 && (
             <ul>
               {errors.map((err, index) => {
@@ -78,41 +69,42 @@ class Signup extends Component {
             </ul>
           )}
           <div className="formWrap">
-            <form onSubmit={this.handleFormSubmit}>
+            <form onSubmit={handleFormSubmit}>
               <FormInput
                 type="text"
                 name="displayName"
                 value={displayName}
                 placeholder="Fullname"
-                onChange={this.handleChange}
+                handleChange={(e) => setDisplayName(e.target.value)}
               />
               <FormInput
                 type="email"
                 name="email"
                 value={email}
                 placeholder="Email"
-                onChange={this.handleChange}
+                handleChange={(e) => setEmail(e.target.value)}
               />
               <FormInput
                 type="password"
                 name="password"
                 value={password}
                 placeholder="Password"
-                onChange={this.handleChange}
+                handleChange={(e) => setPassword(e.target.value)}
               />
               <FormInput
                 type="password"
                 name="confirmPassword"
                 value={confirmPassword}
                 placeholder="Confirm Password"
-                onChange={this.handleChange}
+                handleChange={(e) => setconfirmPassword(e.target.value)}
               />
               <Button type="submit">Regsiter</Button>
             </form>
           </div>
         </div>
       </div>
-    );
-  }
-}
-export default Signup;
+    </AuthWrapper>
+  );
+};
+
+export default withRouter(Signup);
